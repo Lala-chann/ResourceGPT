@@ -1,0 +1,102 @@
+<!DOCTYPE html> <html lang="en" data-theme="light"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Sun and Moon Theme Toggle</title> <style> :root { color-scheme: light; --background: #f5f7fb; --foreground: #202633; --button-background: #ffffff; --button-border: #d7dce5; --sun-color: #f5a623; --moon-color: #c9d8ff; }
+
+
+
+
+
+
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #151923;
+  --foreground: #f5f7fb;
+  --button-background: #222938;
+  --button-border: #394357;
+  --sun-color: #f5a623;
+  --moon-color: #c9d8ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.theme-toggle {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--button-border);
+  border-radius: 50%;
+  background: var(--button-background);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.06);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  overflow: visible;
+}
+
+.icon-group {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+#sunGroup {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+#moonGroup {
+  opacity: 0;
+  transform: scale(0.5) rotate(-40deg);
+}
+
+[data-theme="dark"] #sunGroup {
+  opacity: 0;
+  transform: scale(0.5) rotate(40deg);
+}
+
+[data-theme="dark"] #moonGroup {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+
+</style>
+
+</head> <body> <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark theme" aria-pressed="false" > <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <g id="sunGroup" class="icon-group"> <circle cx="12" cy="12" r="5" fill="var(--sun-color)"/> <g stroke="var(--sun-color)" stroke-width="1.6" stroke-linecap="round"> <line x1="12" y1="1.5" x2="12" y2="4"/> <line x1="12" y1="20" x2="12" y2="22.5"/> <line x1="1.5" y1="12" x2="4" y2="12"/> <line x1="20" y1="12" x2="22.5" y2="12"/> <line x1="4.2" y1="4.2" x2="6" y2="6"/> <line x1="18" y1="18" x2="19.8" y2="19.8"/> <line x1="4.2" y1="19.8" x2="6" y2="18"/> <line x1="18" y1="6" x2="19.8" y2="4.2"/> </g> </g> <path id="moonGroup" class="icon-group" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" fill="var(--moon-color)" /> </svg> </button> <script> const
+themeToggle = document.getElementById("themeToggle"); themeToggle.addEventListener("click", () => { const isDark = document.documentElement.dataset.theme === "dark"; const nextTheme = isDark ? "light" : "dark"; document.documentElement.dataset.theme = nextTheme; themeToggle.setAttribute("aria-pressed", String(nextTheme === "dark")); themeToggle.setAttribute( "aria-label", nextTheme === "dark" ? "Switch to light theme" : "Switch to dark theme" ); }); </script> </body> </html>
